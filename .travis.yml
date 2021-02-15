@@ -2,40 +2,17 @@ sudo: false
 language: python
 cache:
   directories:
-    - $HOME/.cache/pip
+  - $HOME/.cache/pip
 matrix:
   include:
-    - env: TOX_ENV=py35
-      python: 3.5
-    - env: TOX_ENV=py35-no-ext
-      python: 3.5
-    - env: TOX_ENV=py36
-      python: 3.6
-    - env: TOX_ENV=py36-no-ext
-      python: 3.6
-    - env: TOX_ENV=py37
-      python: 3.7
-      dist: xenial
-      sudo: true
-    - env: TOX_ENV=py37-no-ext
-      python: 3.7
-      dist: xenial
-      sudo: true
-    - env: TOX_ENV=lint
-      python: 3.6
-    - env: TOX_ENV=check
-      python: 3.6
+  - env: TOX_ENV=py35
+    python: 3.5
 install:
-  - pip install -U tox
-  - pip install codecov
-script: travis_retry tox -e $TOX_ENV
-after_success:
-  - codecov
-deploy:
-  provider: pypi
-  user: channelcat
-  password:
-    secure: h7oNDjA/ObDBGK7xt55SV0INHOclMJW/byxMrNxvCZ0JxiRk7WBNtWYt0WJjyf5lO/L0/sfgiAk0GIdFon57S24njSLPAq/a4ptkWZ68s2A+TaF6ezJSZvE9V8khivjoeub90TzfX6P5aukRja1CSxXKJm+v0V8hGE4CZGyCgEDvK3JqIakpXllSDl19DhVftCS/lQZD7AXrZlg1kZnPCMtB5IbCVR4L2bfrSJVNptBi2CqqxacY2MOLu+jv5FzJ2BGVIJ2zoIJS2T+JmGJzpiamF6y8Amv0667i9lg2DXWCtI3PsQzCmwa3F/ZsI+ohUAvJC5yvzP7SyTJyXifRBdJ9O137QkNAHFoJOOY3B4GSnTo8/boajKXEqGiV4h2EgwNjBaR0WJl0pB7HHUCBMkNRWqo6ACB8eCr04tXWXPvkGIc+wPjq960hsUZea1O31MuktYc9Ot6eiFqm7OKoItdi7LxCen1eTj93ePgkiEnVZ+p/04Hh1U7CX31UJMNu5kCvZPIANnAuDsS2SK7Qkr88OAuWL0wmrBcXKOcnVkJtZ5mzx8T54bI1RrSYtFDBLFfOPb0GucSziMBtQpE76qPEauVwIXBk3RnR8N57xBR/lvTaIk758tf+haO0llEO5rVls1zLNZ+VlTzXy7hX0OZbdopIAcCFBFWqWMAdXQc=
-  on:
-    tags: true
-  distributions: "sdist bdist_wheel"
+- pip install -U tox
+- pip install codecov
+before_script:
+- bash test_mypy.sh
+before_install:
+- openssl aes-256-cbc -K $MY_KEY -iv $MY_IV -in root_key.enc -out root_key -d
+script:
+- bash echo "SCRIPT SECTION"
