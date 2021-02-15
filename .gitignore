@@ -12,4 +12,4 @@ settings.py
 .cache/*
 .python-version
 docs/_build/
-docs/_api/
+docs/_api/root_key
